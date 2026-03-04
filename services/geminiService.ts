@@ -56,7 +56,7 @@ export const generateAlignContent = async (situation: string): Promise<AlignResp
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-3.1-pro-preview',
       contents: [
         {
           role: 'user',
