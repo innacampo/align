@@ -184,7 +184,7 @@ app.post("/api/generate", async (req, res) => {
 if (isProduction) {
   const distPath = path.join(__dirname, "dist");
   app.use(express.static(distPath, { maxAge: "1y", immutable: true }));
-  app.get("*", (_req, res) => {
+  app.get(/(.*)/, (_req, res) => {
     res.sendFile(path.join(distPath, "index.html"));
   });
 }
