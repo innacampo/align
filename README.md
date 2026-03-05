@@ -91,6 +91,14 @@ The Gemini API key **never** reaches the client. All AI requests are proxied thr
 - **Body size limit**: 10KB max request body
 - **No source maps** in production builds
 
+## Contributing
+
+We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md) before opening issues or pull requests. Contributions can include bug fixes, new features, documentation improvements, or tests.
+
+## Support & Funding
+
+If you'd like to support development, consider [sponsoring the project](https://github.com/sponsors/<your-github-username>) or visiting our [funding page](https://github.com/<your-github-username>/align/settings/funding). The `.github/FUNDING.yml` file lists available options.
+
 ## License
 
 MIT License
