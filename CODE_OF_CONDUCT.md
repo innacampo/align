@@ -51,7 +51,7 @@ an individual is officially representing the community in public spaces.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project maintainers at [your-email@example.com].
+reported by contacting the project maintainers at [inna@harmonilab.org](mailto:inna@harmonilab.org).
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community members are expected to follow these rules. Project maintainers
