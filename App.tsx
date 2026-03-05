@@ -22,8 +22,8 @@ const App: React.FC = () => {
       setResponseData(data);
       setLoadingState('success');
     } catch (err) {
-      console.error(err);
-      setError("We encountered a temporary disruption in our neural link. Please try again.");
+      const message = err instanceof Error ? err.message : "We encountered a temporary disruption. Please try again.";
+      setError(message);
       setLoadingState('error');
     }
   };

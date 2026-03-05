@@ -12,24 +12,38 @@ ALIGN is a specialized tool designed to help professionals navigate workplace si
 
 ## Tech Stack
 
-- **Frontend**: React (Vite)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **AI Integration**: Google GenAI SDK (Gemini)
+- **Frontend**: React (Vite) + Tailwind CSS
+- **Backend**: Express.js (API proxy, rate limiting, security headers)
+- **Language**: TypeScript / JavaScript
+- **AI Integration**: Google GenAI SDK (Gemini) — server-side only
+
+## Architecture
+
+```
+Browser  ──►  Vite (dev) / Static files (prod)
+                │
+                ▼
+         Express Server (/api/generate)
+                │
+                ▼
+         Google Gemini API
+```
+
+The Gemini API key **never** reaches the client. All AI requests are proxied through the Express backend server, which also enforces rate limiting, input validation, and security headers.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher recommended)
+- Node.js (v20 or higher recommended)
 - npm (or yarn/pnpm)
-- Google GenAI API Key
+- [Google GenAI API Key](https://aistudio.google.com/apikey)
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone [repository-url]
+   git clone <repository-url>
    cd align
    ```
 
@@ -39,25 +53,43 @@ ALIGN is a specialized tool designed to help professionals navigate workplace si
    ```
 
 3. Set up environment variables:
-   Create a `.env` file in the root directory and add your Google GenAI API key:
+   ```bash
+   cp .env.example .env
+   ```
+   Then edit `.env` and add your actual Gemini API key:
    ```
    GEMINI_API_KEY=your_api_key_here
    ```
-   Note: The application is configured to read `GEMINI_API_KEY` from the environment and expose it as `process.env.API_KEY` to the client.
 
-4. Run the development server:
+4. Run in development mode:
    ```bash
    npm run dev
    ```
+   This starts both the Vite dev server (port 3000) and the Express API server (port 3001). The Vite dev server proxies `/api` requests to the backend.
 
-5. Open your browser and navigate to the local server address (usually `http://localhost:3000`).
+5. Open `http://localhost:3000` in your browser.
 
-## Usage
+### Production
 
-1. Enter a description of your workplace situation in the input field.
-2. Click "Generate".
-3. Review the Reframe, Science explanation, and suggested Scripts.
-4. Copy the script that best fits your needs.
+1. Build the frontend:
+   ```bash
+   npm run build
+   ```
+
+2. Start the production server:
+   ```bash
+   npm start
+   ```
+   This serves the built frontend and API from a single Express server on port 3001 (configurable via `PORT` env var).
+
+## Security
+
+- **API key isolation**: Gemini key stays server-side; never bundled into client code
+- **Rate limiting**: 30 requests per 15-minute window per IP
+- **Input validation**: Length limits, control character stripping
+- **Security headers**: Helmet.js (CSP, HSTS, X-Frame-Options, etc.)
+- **Body size limit**: 10KB max request body
+- **No source maps** in production builds
 
 ## License
 
