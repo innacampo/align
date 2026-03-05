@@ -65,7 +65,7 @@ The Gemini API key **never** reaches the client. All AI requests are proxied thr
    ```bash
    npm run dev
    ```
-   This starts both the Vite dev server (port 3000) and the Express API server (port 3001). The Vite dev server proxies `/api` requests to the backend.
+   This starts both the Vite dev server (port 3000) and the Express API server (port 8080). The Vite dev server proxies `/api` requests to the backend.
 
 5. Open `http://localhost:3000` in your browser.
 
@@ -80,7 +80,7 @@ The Gemini API key **never** reaches the client. All AI requests are proxied thr
    ```bash
    npm start
    ```
-   This serves the built frontend and API from a single Express server on port 3001 (configurable via `PORT` env var).
+   This serves the built frontend and API from a single Express server on port 8080 (configurable via `PORT` env var).
 
 ## Security
 

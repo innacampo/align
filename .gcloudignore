@@ -1,0 +1,21 @@
+# This file specifies files that should not be uploaded to Google Cloud Build.
+# It is used by gcloud when deploying to Cloud Run.
+
+.git
+.github
+.vscode
+.idea
+
+node_modules
+dist
+
+.env
+.env.*
+.env.example
+
+*.md
+!README.md
+
+.DS_Store
+*.sw?
+*.log

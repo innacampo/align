@@ -17,7 +17,6 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=3001
 
 # Install production dependencies only
 COPY package.json package-lock.json* ./
@@ -27,6 +26,7 @@ RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
 COPY server.js ./
 
-EXPOSE 3001
+# Cloud Run injects PORT env var (default 8080)
+EXPOSE 8080
 
 CMD ["node", "server.js"]

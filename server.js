@@ -17,7 +17,7 @@ if (!GEMINI_API_KEY) {
   process.exit(1);
 }
 
-const PORT = parseInt(process.env.PORT || "3001", 10);
+const PORT = parseInt(process.env.PORT || "8080", 10);
 const NODE_ENV = process.env.NODE_ENV || "development";
 const isProduction = NODE_ENV === "production";
 
@@ -190,6 +190,6 @@ if (isProduction) {
 }
 
 // --- Start server ---
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`ALIGN server running in ${NODE_ENV} mode on port ${PORT}`);
 });
