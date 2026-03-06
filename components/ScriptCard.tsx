@@ -3,10 +3,18 @@ import { ScriptOption } from '../types';
 
 interface ScriptCardProps {
   script: ScriptOption;
+  index: number;
 }
 
-const ScriptCard: React.FC<ScriptCardProps> = ({ script }) => {
+const accentColors = [
+  { bg: 'bg-align-teal/10', text: 'text-align-teal', border: 'border-align-teal/30', pill: 'bg-align-teal' },
+  { bg: 'bg-align-coral/10', text: 'text-align-coral', border: 'border-align-coral/30', pill: 'bg-align-coral' },
+  { bg: 'bg-align-navy/10', text: 'text-align-navy', border: 'border-align-navy/30', pill: 'bg-align-navy' },
+];
+
+const ScriptCard: React.FC<ScriptCardProps> = ({ script, index }) => {
   const [copied, setCopied] = useState(false);
+  const accent = accentColors[index % accentColors.length];
 
   const handleCopy = async () => {
     try {
@@ -14,7 +22,6 @@ const ScriptCard: React.FC<ScriptCardProps> = ({ script }) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for non-secure contexts
       const textarea = document.createElement('textarea');
       textarea.value = script.content;
       textarea.style.position = 'fixed';
@@ -29,26 +36,30 @@ const ScriptCard: React.FC<ScriptCardProps> = ({ script }) => {
   };
 
   return (
-    <div className="group relative bg-align-card/40 border border-align-accent/20 rounded-xl p-6 hover:border-align-accent/50 hover:bg-align-card/60 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+    <div 
+      className="group bg-align-card border border-align-border rounded-2xl p-6 md:p-8 hover:shadow-card-hover hover:border-align-border-dark transition-all duration-300"
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
       <div className="flex justify-between items-start mb-5">
-        <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-white bg-align-accent/80 px-2.5 py-1 rounded w-fit shadow-sm">
-                {script.type}
+        <div className="flex items-center gap-3">
+          <span className={`w-2 h-2 rounded-full ${accent.pill}`} />
+          <span className={`text-xs font-bold uppercase tracking-wider ${accent.text}`}>
+            {script.type}
+          </span>
+          {script.tone && (
+            <span className="text-xs text-align-text-secondary/60 font-medium">
+              &middot; {script.tone}
             </span>
-            {script.tone && (
-                <span className="text-[10px] font-medium uppercase tracking-wide text-align-accent/80 pl-0.5">
-                    {script.tone}
-                </span>
-            )}
+          )}
         </div>
 
         <button
           onClick={handleCopy}
           className={`
-            flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200
+            flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200
             ${copied 
-                ? 'bg-green-500/10 text-green-400 border border-green-500/30' 
-                : 'bg-align-accent/10 text-align-accent border border-align-accent/20 hover:bg-align-accent hover:text-white hover:border-align-accent hover:shadow-md'
+                ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' 
+                : 'bg-align-bg text-align-text-secondary border border-align-border hover:bg-align-teal hover:text-white hover:border-align-teal'
             }
           `}
         >
@@ -66,10 +77,10 @@ const ScriptCard: React.FC<ScriptCardProps> = ({ script }) => {
         </button>
       </div>
       
-      <div className="relative">
-        <div className="font-mono text-sm leading-relaxed text-align-text/90 whitespace-pre-wrap bg-align-dark/40 p-5 rounded-lg border border-white/5 group-hover:border-align-accent/10 transition-colors">
-            {script.content}
-        </div>
+      <div className={`rounded-xl ${accent.bg} ${accent.border} border p-5`}>
+        <p className="text-sm leading-relaxed text-align-text whitespace-pre-wrap">
+          {script.content}
+        </p>
       </div>
     </div>
   );
