@@ -24,6 +24,9 @@ const isProduction = NODE_ENV === "production";
 // --- Express app ---
 const app = express();
 
+// Tell Express to trust the Google Cloud Run proxy headers
+app.set('trust proxy', 1);
+
 // Security headers
 app.use(
   helmet({
